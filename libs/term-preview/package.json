@@ -10,7 +10,7 @@
     "access": "public"
   },
   "dependencies": {
-    "rc-tooltip": "^6.0.0"
+    "@rc-component/tooltip": "^1.0.0"
   },
   "scripts": {
     "build": "rollup -c --silent"
