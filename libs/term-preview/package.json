@@ -9,7 +9,6 @@
     "access": "public"
   },
   "dependencies": {
-    "postel": "0.1.5",
     "rc-tooltip": "5.0.2",
     "rollup": "2.38.5"
   },
