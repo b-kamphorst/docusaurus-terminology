@@ -50,6 +50,7 @@ const Tooltip = (props) => {
   const { children, pathName } = props;
   const [content, setContent] = useState();
   const cleanPathname = pathName.replace(/\/$/, "");
+  const rebasedPathName = pathName.replace("docs", "documentation");
 
   return (
     <BrowserOnly
@@ -67,7 +68,7 @@ const Tooltip = (props) => {
             />
           }
         >
-          <a style={link} href={pathName}>
+          <a style={link} href={rebasedPathName}>
             {children}
           </a>
         </RcTooltip>

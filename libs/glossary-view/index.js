@@ -33,9 +33,14 @@ const Glossary = () => {
           <>
             {
               Object.keys(content).map(key => {
+                const rebasedPathName = withBaseUrl(
+                  `${key
+                    .replace("/\\/g", "/")
+                    .replace("docs", "documentation")}`
+                );
                 return (
                   <p key={key}>
-                    <Link to={withBaseUrl(`${key.replace('/\\/g', '/')}`)}>{content[key].metadata.title}</Link>: <span style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: content[key].metadata.hoverText }} />
+                    <Link to={rebasedPathName}>{content[key].metadata.title}</Link>: <span style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: content[key].metadata.hoverText }} />
                   </p>
                 )
               })
