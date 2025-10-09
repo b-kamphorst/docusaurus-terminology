@@ -38,6 +38,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/documentation',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -62,7 +63,8 @@ const config = {
     ['@grnet/docusaurus-terminology', {
       termsDir: './docs/01-meta/terms',
       docsDir: './docs/',
-      glossaryFilepath: './docs/01-meta/02-glossary.md'
+      glossaryFilepath: './docs/01-meta/02-glossary.md',
+      routeBasePath: '/documentation'
     }],
   ],
 
