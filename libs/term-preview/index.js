@@ -67,7 +67,7 @@ const Tooltip = (props) => {
             />
           }
         >
-          <a style={link} href={pathName}>
+          <a style={link} href={cleanPathname}>
             {children}
           </a>
         </RcTooltip>

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import Link from '@docusaurus/Link';
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
+import { useEffect, useState } from 'react';
 
 const Glossary = () => {
   const [content, setContent] = useState();
@@ -33,9 +33,10 @@ const Glossary = () => {
           <>
             {
               Object.keys(content).map(key => {
+                console.log("glossary-view key:", key);
                 return (
                   <p key={key}>
-                    <Link to={withBaseUrl(`${key.replace('/\\/g', '/')}`)}>{content[key].metadata.title}</Link>: <span style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: content[key].metadata.hoverText }} />
+                    <Link to={withBaseUrl(`${key.replace("/\\/g", "/")}`)}>{content[key].metadata.title}</Link>: <span style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: content[key].metadata.hoverText }} />
                   </p>
                 )
               })

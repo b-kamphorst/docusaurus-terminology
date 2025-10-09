@@ -1,34 +1,43 @@
-const path = require('path');
 const parseMD = require('parse-md').default;
 const store = require('@grnet/terminology-store');
+const path = require('path');
 const remark = require('remark')
 const remarkHTML = require('remark-html')
 
+function sanitize(p) {
+  const p_unix = p
+    .replace(/^\.\//, '')
+    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const p_win = p.replace(/\//g, "\\")
+    .replace(/\./, "")
+    .replace(/[*+?^${}()|[\]\\]/g, '\\$&');
+  return process.platform === 'win32' ? p_win : p_unix;
+}
+
 module.exports = function(source) {
-  const unixRegex = new RegExp(
-    `(${this.query.termsDir
-      .replace(/^\.\//, '')
-      .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?)\.(md|mdx)`
-  );
-  const winRegex = new RegExp(
-    `(${this.query.termsDir
-      .replace(/\//g, "\\")
-      .replace(/\./, "")
-      .replace(/[*+?^${}()|[\]\\]/g, '\\$&')}.*?)\.(md|mdx)`
+  const pattern = new RegExp(
+    `(${sanitize(this.query.termsDir)}.*?)\.(md|mdx)`
   );
   const unixResourcePath = this.resourcePath
   const winResourcePath = this.resourcePath.replace(/\\/, "\\\\")
 
-  const termMatch = process.platform === 'win32' ? winResourcePath.match(winRegex) : unixResourcePath.match(unixRegex);
+  const termMatch = process.platform === 'win32' ? winResourcePath.match(pattern) : unixResourcePath.match(pattern);
 
   if (termMatch) {
-    const data = parseMD(source);
     const resourcePath = termMatch[1].replace(/\d+-/, '');
+    const docsDir = sanitize(this.query.docsDir);
+    const resourcePathRelativeToDocsDir = path.relative(docsDir, resourcePath);
+
+    const routeBasePath = sanitize(this.query.routeBasePath || this.query.docsDir);
+    const targetPath = path.posix.join(routeBasePath, resourcePathRelativeToDocsDir);
+
+    const data = parseMD(source);
     data.metadata.hoverText = data.metadata.hoverText ? remark()
       .use(remarkHTML, { sanitize: true })
       .processSync(data.metadata.hoverText).contents : '';
-    store.addTerm(resourcePath, data);
-    this.emitFile(resourcePath + '.json', JSON.stringify(data))
+
+    store.addTerm(targetPath, data);
+    this.emitFile(targetPath + '.json', JSON.stringify(data));
   }
 
   return source;

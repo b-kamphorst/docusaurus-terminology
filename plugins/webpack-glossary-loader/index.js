@@ -3,7 +3,6 @@ const store = require('@grnet/terminology-store');
 const path = require('path');
 
 module.exports = function(source) {
-  const urls = store.terms;
   const importStatement = `
 import Glossary from "${ this.query.glossaryComponentPath || "@grnet/docusaurus-glossary-view"}";
   `;
