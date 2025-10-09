@@ -22,9 +22,18 @@ import Term from "${ this.query.termPreviewComponentPath || "@grnet/docusaurus-t
         const rel_path = process.platform === 'win32' ? path.win32.relative(root, this.resourcePath) : path.relative(root, this.resourcePath);
         const pathName = new URL(urlPath, `http://bla.com/${rel_path}`).pathname;
         if (pathName.includes(this.query.termsDir.replace(/\./, ''))) {
+          const docsDir = '/docs';
+          const routeBasePath = '/documentation';
+
+          const pathRelativeToDocsDir = path.relative(docsDir, pathName);
+          const targetPathName = path.posix.join(
+            routeBasePath,
+            pathRelativeToDocsDir
+          );
+
           const termKey =
             this.query.baseUrl.replace(/\/$/, '') +
-            pathName.replace(/\.(md|mdx)$/, '');
+            targetPathName.replace(/\.(md|mdx)$/, '');
           source = source.replace(
             mdUrl,
             `<Term pathName="${termKey.replace(/\d+-/, '')}">${title}</Term>`
