@@ -1,5 +1,4 @@
 const parseMD = require('parse-md').default;
-const store = require('@grnet/terminology-store');
 const path = require('path');
 const pkgUp = require('pkg-up');
 const pkg = pkgUp.sync({ cwd: process.cwd() });
@@ -26,7 +25,6 @@ import Term from "${ this.query.termPreviewComponentPath || "@grnet/docusaurus-t
           const termKey =
             this.query.baseUrl.replace(/\/$/, '') +
             pathName.replace(/\.(md|mdx)$/, '');
-          const metadata = store.terms[termKey];
           source = source.replace(
             mdUrl,
             `<Term pathName="${termKey.replace(/\d+-/, '')}">${title}</Term>`

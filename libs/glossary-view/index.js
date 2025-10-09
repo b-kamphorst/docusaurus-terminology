@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import Link from '@docusaurus/Link';
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
+import { useEffect, useState } from 'react';
 
 const Glossary = () => {
   const [content, setContent] = useState();

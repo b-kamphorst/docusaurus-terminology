@@ -1,4 +1,3 @@
-const path = require('path');
 const parseMD = require('parse-md').default;
 const store = require('@grnet/terminology-store');
 const remark = require('remark')
