@@ -26,25 +26,28 @@ yarn add @grnet/docusaurus-terminology
 
 Once the package is installed, you need to configure it in your Docusaurus site configuration file by adding the plugin to your `docusaurus.config.js` file:
 
-```
+```js
 module.exports = {
     ...
   plugins: [
     ['@grnet/docusaurus-terminology', {
       termsDir: './docs/terms',
       docsDir: './docs/',
-      glossaryFilepath: './docs/glossary.md'
+      glossaryFilepath: './docs/glossary.md',
+      routeBasePath: './docs' // optional, defaults to docsDir
     }],
   ],
     ...
 };
 ```
 
+Here, the value for `routeBasePath` should equal the value in the `presets:docs:routeBasePath` configuration if that is supplied manually.
+
 There is the ability to use custom components for the glossary file and term preview tooltip, instead of using the ones provided by `@grnet/docusaurus-term-preview` and `@grnet/docusaurus-glossary-view`.
 
 To modify the default options, add the fields `glossaryComponentPath`, `termPreviewComponentPath` in the plugins section to provide the corresponding component paths (**relative to the `/docs` folder**):
 
-```
+```js
 plugins: [
     ['@grnet/docusaurus-terminology', {
       ...
